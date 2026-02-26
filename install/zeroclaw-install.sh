@@ -88,18 +88,31 @@ if ! tar xzf zeroclaw-*.tar.gz; then
 fi
 
 install -m 0755 zeroclaw /usr/local/bin/zeroclaw
+cd /root
 rm -rf "$TEMP_DIR"
 
 msg_ok "Installed ZeroClaw ${RELEASE}"
 
-# Step 3: Verify binary is accessible
+# Step 3: Ensure /usr/local/bin is in PATH permanently
+msg_info "Configuring PATH..."
+if ! grep -q '/usr/local/bin' /etc/profile; then
+  echo 'export PATH=$PATH:/usr/local/bin' >> /etc/profile
+fi
+if ! grep -q '/usr/local/bin' /etc/bash.bashrc 2>/dev/null; then
+  echo 'export PATH=$PATH:/usr/local/bin' >> /etc/bash.bashrc
+fi
+# Set for current session
+export PATH=$PATH:/usr/local/bin
+msg_ok "Added /usr/local/bin to PATH"
+
+# Step 4: Verify binary is accessible
 if ! command -v zeroclaw &> /dev/null; then
   msg_error "zeroclaw not found in PATH after installation"
   exit 1
 fi
 msg_ok "Binary available at: $(which zeroclaw)"
 
-# Step 4: Install bash completions
+# Step 5: Install bash completions
 msg_info "Installing bash completions..."
 mkdir -p /etc/bash_completion.d
 if zeroclaw completions bash > /etc/bash_completion.d/zeroclaw 2>/dev/null; then
@@ -108,13 +121,13 @@ else
   msg_info "Completions not available in this version (skipping)"
 fi
 
-# Step 5: Create necessary directories
+# Step 6: Create necessary directories
 msg_info "Creating directories..."
 mkdir -p /root/.zeroclaw/memory
 mkdir -p /var/log/zeroclaw
 msg_ok "Created directories"
 
-# Step 6: Create systemd service
+# Step 7: Create systemd service
 msg_info "Creating systemd service..."
 cat > /etc/systemd/system/zeroclaw.service << 'EOF'
 [Unit]
@@ -138,7 +151,7 @@ systemctl daemon-reload
 systemctl enable zeroclaw > /dev/null 2>&1
 msg_ok "Created systemd service"
 
-# Step 7: Start service
+# Step 8: Start service
 msg_info "Starting ZeroClaw..."
 systemctl start zeroclaw
 sleep 2
@@ -151,7 +164,7 @@ else
   echo "  Check logs with: journalctl -u zeroclaw"
 fi
 
-# Step 8: Display completion info
+# Step 9: Display completion info
 echo ""
 echo -e "${GREEN}  ✅ ZeroClaw ${RELEASE} installed successfully!${NC}"
 echo ""
