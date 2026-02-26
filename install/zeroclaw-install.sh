@@ -18,9 +18,9 @@
 detect_architecture() {
   local arch=$(uname -m)
   case $arch in
-    x86_64) echo "x86_64" ;;
-    aarch64) echo "aarch64" ;;
-    armv7l) echo "armv7" ;;
+    x86_64) echo "x86_64-unknown-linux-gnu" ;;
+    aarch64) echo "aarch64-unknown-linux-gnu" ;;
+    armv7l) echo "armv7-unknown-linux-gnueabihf" ;;
     *)
       msg_error "Unsupported architecture: $arch"
       exit 1
@@ -53,7 +53,7 @@ if [[ -z "$RELEASE" ]]; then
 fi
 
 ARCH=$(detect_architecture)
-DOWNLOAD_URL="https://github.com/zeroclaw-labs/zeroclaw/releases/download/${RELEASE}/zeroclaw-${ARCH}-unknown-linux-gnu.tar.gz"
+DOWNLOAD_URL="https://github.com/zeroclaw-labs/zeroclaw/releases/download/${RELEASE}/zeroclaw-${ARCH}.tar.gz"
 TEMP_DIR=$(mktemp -d)
 
 cd "$TEMP_DIR"

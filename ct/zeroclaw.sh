@@ -74,16 +74,16 @@ function update_script() {
   # Detect architecture
   ARCH=$(uname -m)
   case $ARCH in
-    x86_64) BINARY_ARCH="x86_64" ;;
-    aarch64) BINARY_ARCH="aarch64" ;;
-    armv7l) BINARY_ARCH="armv7" ;;
+    x86_64) BINARY_ARCH="x86_64-unknown-linux-gnu" ;;
+    aarch64) BINARY_ARCH="aarch64-unknown-linux-gnu" ;;
+    armv7l) BINARY_ARCH="armv7-unknown-linux-gnueabihf" ;;
     *)
       msg_error "Unsupported architecture: $ARCH"
       exit 1
       ;;
   esac
 
-  DOWNLOAD_URL="https://github.com/zeroclaw-labs/zeroclaw/releases/download/${RELEASE}/zeroclaw-${BINARY_ARCH}-unknown-linux-gnu.tar.gz"
+  DOWNLOAD_URL="https://github.com/zeroclaw-labs/zeroclaw/releases/download/${RELEASE}/zeroclaw-${BINARY_ARCH}.tar.gz"
   TEMP_DIR=$(mktemp -d)
 
   cd "$TEMP_DIR"
