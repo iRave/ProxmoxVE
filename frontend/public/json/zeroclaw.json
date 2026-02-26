@@ -1,0 +1,51 @@
+{
+  "name": "ZeroClaw",
+  "slug": "zeroclaw",
+  "categories": [
+    "ai",
+    "automation"
+  ],
+  "date_added": "2026-02-26",
+  "description": "Fast, small, and fully autonomous AI assistant infrastructure. Runs on $10 hardware with <5MB RAM - 99% less memory than OpenClaw. Deploy anywhere, swap anything.",
+  "readme_url": "https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/main/README.md",
+  "project_website": "https://zeroclawlabs.ai",
+  "source_url": "https://github.com/zeroclaw-labs/zeroclaw",
+  "license": "MIT OR Apache-2.0",
+  "resources": {
+    "cpu": 2,
+    "ram": 2048,
+    "disk": 16
+  },
+  "ports": [
+    42617
+  ],
+  "tags": [
+    "ai",
+    "automation",
+    "llm",
+    "agent",
+    "rust",
+    "self-hosted",
+    "openrouter",
+    "openai",
+    "anthropic"
+  ],
+  "notes": [
+    {
+      "text": "Run 'zeroclaw onboard' after installation to configure your AI provider",
+      "type": "info"
+    },
+    {
+      "text": "Default gateway port is 42617",
+      "type": "info"
+    },
+    {
+      "text": "Supports OpenRouter, OpenAI, Anthropic, and custom endpoints",
+      "type": "info"
+    },
+    {
+      "text": "Config stored at /root/.zeroclaw/config.toml",
+      "type": "info"
+    }
+  ]
+}
